@@ -8,6 +8,8 @@ const path = require('path')
 
 const PORT = process.env.PORT || 3300;
 
+app.use(expr.static('public'))
+
 app.get('/', (req, res)=>{
     res.render('home')
 })
