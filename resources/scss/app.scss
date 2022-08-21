@@ -1,5 +1,6 @@
 @import './variables';
 
+
 body{
     font-family: 'Lato', sans-serif;
     -webkit-font-smooting : antialiased;
@@ -63,4 +64,8 @@ section.login{
     &:hover{
         color: $primary-hover;
     }
+}
+
+a.link{
+    color: $primary;
 }
