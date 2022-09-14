@@ -24,10 +24,10 @@ const MongoDbStore = require('connect-mongo')
 
 const url = 'mongodb://localhost:27017/pizza';
 
-
+var bodyParser = require('body-parser');
 
 const connection = mongoose.connection;
-
+app.use(bodyParser());
 mongoose.connect(url,
   err => {
       if(err) throw err;
@@ -38,7 +38,8 @@ mongoose.connect(url,
       console.log("Failed");
     }
   )
-
+  app.use(expr.json()); 
+  app.use(expr.urlencoded({ extended: true }));
 
 app.use(session({
     secret: process.env.COOKIE_SECRET,
@@ -55,7 +56,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash())
 app.use(expr.json())
-app.use(expr.static('public'))
+app.use(expr.static('public'))/
 app.use(expr.urlencoded({extended:false}));
 ///Global middleware
 

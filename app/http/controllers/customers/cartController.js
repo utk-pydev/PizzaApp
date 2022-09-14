@@ -6,14 +6,6 @@ function cartController(){
         },
         update(req, res){
 
-        //     let cart = {
-        //         item:{
-        //         pizzaId:{item:pizzaObject, qty:0},
-        //     },
-        //     totalQty:0,
-        //     totalPrice:0
-        // }
-
         ///for first time creating cart
             if(!req.session.cart){
                 req.session.cart = {

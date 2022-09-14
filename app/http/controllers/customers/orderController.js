@@ -3,7 +3,7 @@ const Order = require('../../../models/order')
 const moment = require('moment')
 function orderController(){
     return{
-        store(req, res){
+       async store(req, res){
             const{phone, address} = req.body;
           
             if(!phone || !address){
@@ -17,23 +17,33 @@ function orderController(){
                 address
             })
             console.log(order);
-            order.save().then((result)=>{
-               
+            try{
+                const Save = await order.save();
+                
                 req.flash('success', 'Order Placed Successfully')
-                return res.redirect('/');
-            }).catch(err=>{
+                delete req.session.cart;
+                return res.redirect('/customer/orders');
+
+            }
+            catch(error){
                 console.log(err);
                 req.flash('error', 'Something Went Wrong')
                 return res.redirect('/cart')  
-            })
-        }, 
+            }
+        },
+        
+         
         async index(req, res){
-           
-            const orders = await Order.find({CustomerId:req.user._id})
+           try{
+            const orders = await Order.find({CustomerId:req.user._id}, null, {sort:{'createdAt':-1}})
             console.log(orders);
+         // res.render('customers/orders');
             res.render('customers/orders', {orders:orders, moment:moment});
-
+           }catch(error){
+                console.log(error);
+           }
         }
+        
     }
 }
 module.exports = orderController;

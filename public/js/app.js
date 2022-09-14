@@ -2186,12 +2186,8 @@ function updateCart(pizza) {
     console.log(res);
     cartCounter.innerText = res.data.totalQty;
     notie__WEBPACK_IMPORTED_MODULE_1___default().alert({
-      // optional, default = 4, enum: [1, 2, 3, 4, 5, 'success', 'warning', 'error', 'info', 'neutral']
       type: 'success',
-      text: "Item added to cart" //stay: Boolean, // optional, default = false
-      //time: Number, // optional, default = 3, minimum = 1,
-      //position: String // optional, default = 'top', enum: ['top', 'bottom']
-
+      text: "Item added to cart"
     }).show();
   });
 }
@@ -2203,6 +2199,13 @@ addToCart.forEach(function (btn) {
     updateCart(pizza);
   });
 });
+var alertMsg = document.querySelector('#success-alert');
+
+if (alertMsg) {
+  setTimeout(function () {
+    alertMsg.remove();
+  }, 2000);
+}
 
 /***/ }),
 
