@@ -37,13 +37,19 @@ function orderController(){
            try{
             const orders = await Order.find({CustomerId:req.user._id}, null, {sort:{'createdAt':-1}})
             console.log(orders);
-         // res.render('customers/orders');
+            res.header('Cache-Control', 'no-cache, privatem no-store, must-revalidate, max-stale = 0, post-check = 0, pre-check = 0')
             res.render('customers/orders', {orders:orders, moment:moment});
            }catch(error){
                 console.log(error);
            }
+        },
+        async show(req, res){
+            const order = await Order.findById(req.params.id);
+            if(req.user._id.toString() === order.CustomerId.toString()){
+                return res.render('customers/singleOrder', {order});
+            }
+            return res.redirect('/');
         }
-        
     }
 }
 module.exports = orderController;
