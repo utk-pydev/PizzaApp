@@ -1,6 +1,6 @@
-
 import axios from "axios";
 import moment from "moment";
+
 function initAdmin(){
     const orderTableBody = document.querySelector('#orderTableBody')
     let orders = [];
@@ -11,6 +11,9 @@ function initAdmin(){
         }
     }).then(res=>{
         orders = res.data;
+        //console.log("Hello123\n");
+        //console.log(JSON.stringify(res));
+        //console.log("Hello2");
         markUp = generateMarkUp(orders);
         orderTableBody.innerHTML = markUp;
 
@@ -22,12 +25,14 @@ function initAdmin(){
 function renderItems(items){
     let parsedItems = Object.values(items);
     return parsedItems.map((menuItem)=>{
-        return `<p>${menuItem.items.name}-${menuItem.qty} pcs</p>`
+        console.log(menuItem);
+      ///  console.log(menuItem.items.name);
+        return `<p>${menuItem.item.name}-${menuItem.qty} pcs</p>`
     }).join('')
 }
 
-
 function generateMarkUp(orders){
+  //  console.log(orders);
     return orders.map(order=>{
         return `
             <tr>
@@ -35,7 +40,7 @@ function generateMarkUp(orders){
                 <p>${order._id}</p>
                 <div>${renderItems(order.items)}</div>
             </td>
-            <td class = "border px-4 py-2">${order.customerId.name}</td>
+            <td class = "border px-4 py-2">${order.CustomerId.name}</td>
             <td class = "border px-4 py-2">${order.address}</td>
             <td class = "border px-4 py-2">
                 <div class = "inline-block relative w-64">
@@ -70,4 +75,4 @@ function generateMarkUp(orders){
     }).join('')
 }
 
-module.exports = initAdmin
+export{ initAdmin}
