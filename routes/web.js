@@ -26,7 +26,7 @@ function initRoutes(app){
     //app.get('/admin/order', auth, AdminOrderController().index);
     app.get('/admin/order', admin, AdminOrderController().index);
     app.post('/admin/order/status', admin, statusController().update);
-    app.get('/customer/orders/:id', auth, orderController().show);
+    app.get('/:id', auth, orderController().show);
     //admin/order/status
 }
 
