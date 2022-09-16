@@ -33,3 +33,10 @@ if(alertMsg){
     }, 2000)
 }
 initAdmin();
+
+let order = (document.querySelector('#hiddenInput')? document.querySelector('#hiddenInput').value:null);
+console.log(order);
+function updateStatus(order){
+
+}
+updateStatus(order);

@@ -2268,6 +2268,12 @@ if (alertMsg) {
 }
 
 (0,_admin__WEBPACK_IMPORTED_MODULE_2__.initAdmin)();
+var order = document.querySelector('#hiddenInput') ? document.querySelector('#hiddenInput').value : null;
+console.log(order);
+
+function updateStatus(order) {}
+
+updateStatus(order);
 
 /***/ }),
 

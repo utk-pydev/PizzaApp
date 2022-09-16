@@ -105,7 +105,7 @@ section.status{
 .status-box ul li{
     position: relative;
 }
-.status-box ul li::before{
+.status-box ul li:before{
     content: '';
     position: absolute;
     top:0;
@@ -132,4 +132,22 @@ section.status{
 }
 .status-box ul li:nth-child(5) span::before{
     content: '\f582';
+}
+.status-box ul li.step-completed:before{
+    background: $gray;
+}
+.status-box ul li.step-completed span::after{
+    background: $gray;
+}
+.status-box ul li.step-completed span{
+    color: $gray;
+}
+.status-box ul li.current:before{
+    background: $primary
+}
+.status-box ul li.current span::after{
+    background: $primary;
+}
+.status-box ul li.current span{
+    color: $primary;
 }
