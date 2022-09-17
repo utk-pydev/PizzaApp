@@ -2,6 +2,8 @@ import axios from 'axios'
 import notie from 'notie'
 import {initAdmin} from './admin'
 import moment from 'moment'
+import { io } from "socket.io-client";
+
 let addToCart = document.querySelectorAll('.add-to-cart')
 
 let cartCounter = document.querySelector('#cartCounter');
@@ -48,8 +50,14 @@ function updateStatus(order){
     console.log(statuses);
     let stepCompleted = true;
     statuses.forEach((status)=>{
+        status.classList.remove('step-completed');
+        status.classList.remove('current');
+    })
+
+    statuses.forEach((status)=>{
         let dataProp = status.dataset.status;
-        console.log(order.updatedAt);
+        console.log(status);
+        //console.log(order.updatedAt);
         if(stepCompleted){
             status.classList.add('step-completed')
         }
@@ -68,7 +76,21 @@ updateStatus(order);
 // Socket
 let socket = io();
 //Join
-socket.emit('join', `order_${order._id}`);
 if(order){
+    console.log('Joined');
     socket.emit('join', `order_${order._id}`);
 }
+console.log(socket);
+console.log('Line 80')
+console.log(order);
+
+socket.on('orderUpdated', (data)=>{
+    console.log('I am being emitted');
+    const updatedOrder = {...order};
+    updatedOrder.updatedAt = moment().format();
+    updatedOrder.status = data.status;
+    console.log('I am inside socket')
+    console.log(updatedOrder);
+    updateStatus(updatedOrder);
+    console.log(data);
+})

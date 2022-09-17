@@ -19,6 +19,9 @@ const passport = require('passport')
 
 const emitter = require('events');
 const MongoDbStore = require('connect-mongo')
+const eventEmitter = new emitter(); 
+
+app.set('eventEmitter', eventEmitter);
 
 //Database connection
 
@@ -89,4 +92,9 @@ io.on('connection', (socket)=>{
       console.log(orderId);
       socket.join(orderId)
     })
+})
+
+eventEmitter.on('orderUpdated', (data)=>{
+  console.log('I am in Socket Updated');
+  io.to(`order_${data.id}`).emit('OrderUpdated', data);
 })
