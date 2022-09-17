@@ -96,5 +96,5 @@ io.on('connection', (socket)=>{
 
 eventEmitter.on('orderUpdated', (data)=>{
   console.log('I am in Socket Updated');
-  io.to(`order_${data.id}`).emit('OrderUpdated', data);
+  io.to(`order_${data.id}`).emit('orderUpdated', data);
 })

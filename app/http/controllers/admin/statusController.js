@@ -8,7 +8,10 @@ function statusController(){
                 console.log('I am in Update');
                 const eventEmitter = req.app.get('eventEmitter');
                 console.log(eventEmitter);
-                eventEmitter.emit('orderUpdated', {id:req.body.orderId, status:req.body.status});
+                
+                eventEmitter.emit('orderUpdated', {id:req.body.orderId, status:req.body.status}, (res)=>{
+                    console.log('YES');
+                });
                 return res.redirect('/admin/order')
             })
         }
