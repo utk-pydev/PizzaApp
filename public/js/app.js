@@ -2320,13 +2320,9 @@ updateStatus(order); // Socket
 var socket = (0,socket_io_client__WEBPACK_IMPORTED_MODULE_4__.io)(); //Join
 
 if (order) {
-  console.log('Joined');
   socket.emit('join', "order_".concat(order._id));
 }
 
-console.log(socket);
-console.log('Line 80');
-console.log(order);
 socket.on('orderUpdated', function (data) {
   console.log('I am being emitted');
 
@@ -2334,10 +2330,7 @@ socket.on('orderUpdated', function (data) {
 
   updatedOrder.updatedAt = moment__WEBPACK_IMPORTED_MODULE_3___default()().format();
   updatedOrder.status = data.status;
-  console.log('I am inside socket');
-  console.log(updatedOrder);
   updateStatus(updatedOrder);
-  console.log(data);
 });
 
 /***/ }),

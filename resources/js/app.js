@@ -77,20 +77,13 @@ updateStatus(order);
 let socket = io();
 //Join
 if(order){
-    console.log('Joined');
     socket.emit('join', `order_${order._id}`);
 }
-console.log(socket);
-console.log('Line 80')
-console.log(order);
 
 socket.on('orderUpdated', (data)=>{
     console.log('I am being emitted');
     const updatedOrder = {...order};
     updatedOrder.updatedAt = moment().format();
     updatedOrder.status = data.status;
-    console.log('I am inside socket')
-    console.log(updatedOrder);
     updateStatus(updatedOrder);
-    console.log(data);
 })
