@@ -17,7 +17,7 @@ const flash = require('express-flash')
 
 const passport = require('passport')
 
-
+const emitter = require('events');
 const MongoDbStore = require('connect-mongo')
 
 //Database connection
@@ -76,6 +76,17 @@ require('./routes/web')(app)
 
 
 
-app.listen(PORT, ()=>{
+const server = app.listen(PORT, ()=>{
     console.log(`Listening on port ${PORT}`)
+})
+
+const io = require('socket.io')(server);
+io.on('connection', (socket)=>{
+    console.log('This is socket Id');
+    console.log(socket.id);
+    socket.on('join', (orderId)=>{
+      console.log('This is orderId');
+      console.log(orderId);
+      socket.join(orderId)
+    })
 })

@@ -2235,6 +2235,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var notie__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! notie */ "./node_modules/notie/dist/notie.min.js");
 /* harmony import */ var notie__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(notie__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _admin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./admin */ "./resources/js/admin.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_3__);
+
 
 
 
@@ -2269,11 +2272,46 @@ if (alertMsg) {
 
 (0,_admin__WEBPACK_IMPORTED_MODULE_2__.initAdmin)();
 var order = document.querySelector('#hiddenInput') ? document.querySelector('#hiddenInput').value : null;
+order = JSON.parse(order);
 console.log(order);
+var statuses = document.querySelectorAll('.status_line');
+var hiddenInput = document.querySelector('#hiddenInput');
+var time = document.createElement('small');
 
-function updateStatus(order) {}
+function updateStatus(order) {
+  console.log('Hello\n');
+  console.log(statuses);
+  var stepCompleted = true;
+  statuses.forEach(function (status) {
+    var dataProp = status.dataset.status;
+    console.log(order.updatedAt);
 
-updateStatus(order);
+    if (stepCompleted) {
+      status.classList.add('step-completed');
+    }
+
+    if (dataProp === order.status) {
+      stepCompleted = false;
+      time.innerText = moment__WEBPACK_IMPORTED_MODULE_3___default()(order.updatedAt).format('hh:mm A');
+      console.log(time);
+      status.appendChild(time);
+
+      if (status.nextElementSibling) {
+        status.nextElementSibling.classList.add('current');
+      }
+    }
+  });
+}
+
+updateStatus(order); // Socket
+
+var socket = io(); //Join
+
+socket.emit('join', "order_".concat(order._id));
+
+if (order) {
+  socket.emit('join', "order_".concat(order._id));
+}
 
 /***/ }),
 
