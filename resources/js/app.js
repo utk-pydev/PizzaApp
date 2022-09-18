@@ -35,7 +35,7 @@ if(alertMsg){
         alertMsg.remove();   
     }, 2000)
 }
-initAdmin();
+
 
 let order = (document.querySelector('#hiddenInput')? document.querySelector('#hiddenInput').value:null);
 order = JSON.parse(order)
@@ -75,6 +75,7 @@ function updateStatus(order){
 updateStatus(order);
 // Socket
 let socket = io();
+initAdmin(socket);
 //Join
 if(order){
     socket.emit('join', `order_${order._id}`);

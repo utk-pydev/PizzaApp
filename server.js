@@ -98,3 +98,10 @@ eventEmitter.on('orderUpdated', (data)=>{
   console.log('I am in Socket Updated');
   io.to(`order_${data.id}`).emit('orderUpdated', data);
 })
+
+eventEmitter.on('orderPlaced', (data)=>{
+    console.log(data);
+    io.to('adminRoom').emit('orderPlaced', data, ()=>{
+      console.log('YES');
+    });
+});

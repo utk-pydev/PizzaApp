@@ -17,19 +17,25 @@ function orderController(){
                 address
             })
             console.log(order);
-            try{
-                const Save = await order.save();
+         
+                order.save().then((result)=>{
+                    Order.populate(result, {path:'customerId'}, (err, placedOrder)=>{
+                        req.flash('success', 'Order Placed Successfully')
+                        delete req.session.cart;
+        
+                        const eventEmitter = req.app.get('eventEmitter');
+                        eventEmitter.emit('orderPlaced', placedOrder, (res)=>{
+                            console.log('orderPlaced');
+                        });
+        
+                        return res.redirect('/customer/orders');
+                    });
+                }).catch(err=>{
+                    console.log(err);
+                    req.flash('error', 'Something Went Wrong')
+                    return res.redirect('/cart')  
+                })
                 
-                req.flash('success', 'Order Placed Successfully')
-                delete req.session.cart;
-                return res.redirect('/customer/orders');
-
-            }
-            catch(error){
-                console.log(err);
-                req.flash('error', 'Something Went Wrong')
-                return res.redirect('/cart')  
-            }
         },
         
          

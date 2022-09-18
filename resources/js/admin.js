@@ -1,7 +1,8 @@
 import axios from "axios";
 import moment from "moment";
+import notie from 'notie';
 
-function initAdmin(){
+function initAdmin(socket){
     const orderTableBody = document.querySelector('#orderTableBody')
     let orders = [];
     let markUp;
@@ -74,5 +75,15 @@ function generateMarkUp(orders){
         `
     }).join('')
 }
+const socket = io();
+socket.on('orderPlaced', (order)=>{
+    notie.alert({
+        type:'success',
+        text: "New Order",
+      }).show();
+      orders.unshift(order);
+      orderTableBody.innerHTML = '';
+      orderTableBody.innerHTML = generateMarkUp(orders);
+});
 
 export{ initAdmin}
